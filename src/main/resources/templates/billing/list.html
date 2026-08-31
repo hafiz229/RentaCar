@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Billing Management</title>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <h2>Billing Management</h2>
+
+    <hr>
+
+    <div class="mb-3">
+
+        <a class="btn btn-success"
+           th:href="@{/vehicles}">
+            Vehicles
+        </a>
+
+        <a class="btn btn-primary"
+           th:href="@{/customers}">
+            Customers
+        </a>
+
+        <a class="btn btn-warning"
+           th:href="@{/rentals}">
+            Rentals
+        </a>
+
+    </div>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+        <tr>
+
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Vehicle</th>
+            <th>Total Amount</th>
+            <th>Paid</th>
+            <th width="180">Action</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="billing : ${billings}">
+
+            <td th:text="${billing.id}"></td>
+
+            <td th:text="${billing.rental.customer.firstName + ' ' + billing.rental.customer.lastName}">
+            </td>
+
+            <td th:text="${billing.rental.vehicle.brand + ' ' + billing.rental.vehicle.model}">
+            </td>
+
+            <td>
+
+                $
+
+                <span th:text="${billing.totalAmount}">
+                </span>
+
+            </td>
+
+            <td>
+
+                <span
+                        class="badge bg-success"
+                        th:if="${billing.paid}">
+
+                    Paid
+
+                </span>
+
+                <span
+                        class="badge bg-danger"
+                        th:unless="${billing.paid}">
+
+                    Unpaid
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <a
+                        class="btn btn-info btn-sm"
+                        th:href="@{'/billings/' + ${billing.id}}">
+
+                    Details
+
+                </a>
+
+                <a
+                        class="btn btn-success btn-sm"
+                        th:if="${!billing.paid}"
+                        th:href="@{'/billings/pay/' + ${billing.id}}">
+
+                    Pay
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+
+</html>
